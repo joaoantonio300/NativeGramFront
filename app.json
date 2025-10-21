@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "reactgram",
-    "slug": "reactgram",
+    "slug": "nativegram",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -28,8 +28,9 @@
     },
     "extra": {
       "eas": {
-        "projectId": "06e243b9-c38b-4dce-8a08-f4014ca167f0"
+        "projectId": "e199f5e2-422d-4f5d-aa55-5bac79b50aaa"
       }
-    }
+    },
+    "owner": "joaoantonio300"
   }
 }

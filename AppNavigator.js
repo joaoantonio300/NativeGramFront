@@ -52,7 +52,7 @@ function CustomHeader({ navigation }) {
       }}
     >
       <Text style={{ fontSize: 20, fontWeight: "bold", color: "#000" }}>
-        Reactgram + {user?.name}
+        {user?.name}
       </Text>
 
       <View style={{ flexDirection: "row", alignItems: "center" }}>
