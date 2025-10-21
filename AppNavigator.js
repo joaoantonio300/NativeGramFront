@@ -6,7 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { View, Text, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { loadUserFromStorage } from "../NativeGram/slices/authSlice";
+import { loadUserFromStorage } from "./slices/authSlice";
 
 // Criando um sistema de navegacao onde temos que exportar o navigatorContainer e o createNativeStackNavigator
 
@@ -14,7 +14,7 @@ import { loadUserFromStorage } from "../NativeGram/slices/authSlice";
 import { useAuth } from "./hooks/useAuth";
 
 // Redux
-import { logout, reset } from "../NativeGram/slices/authSlice";
+import { logout, reset } from "./slices/authSlice";
 
 // Pages
 import Home from "./pages/Home/Home";
