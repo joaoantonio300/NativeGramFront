@@ -9,7 +9,7 @@ const publishPhoto = async (data, token) => {
 
     return res;
   } catch (error) {
-    ("Network request failed");
+    console.log(error);
   }
 };
 
@@ -25,7 +25,7 @@ const getUserPhotos = async (id, token) => {
 
     return res;
   } catch (error) {
-    return "Network request failed";
+    console.log(error);
   }
 };
 
@@ -36,11 +36,11 @@ const deletePhoto = async (id, token) => {
   try {
     const res = await fetch(api + "/photos/" + id, config)
       .then((res) => res.json())
-      .catch((err) => "Network request failed");
+      .catch((err) => err);
 
     return res;
   } catch (error) {
-    return "Network request failed";
+    console.log(error);
   }
 };
 
@@ -51,11 +51,11 @@ const updatePhoto = async (data, id, token) => {
   try {
     const res = await fetch(api + "/photos/" + id, config)
       .then((res) => res.json())
-      .catch((err) => "Network request failed");
+      .catch((err) => err);
 
     return res;
   } catch (error) {
-    return "Network request failed";
+    console.log(error);
   }
 };
 
@@ -66,11 +66,11 @@ const getPhoto = async (id, token) => {
   try {
     const res = await fetch(api + "/photos/" + id, config)
       .then((res) => res.json())
-      .catch((err) => "Network request failed");
+      .catch((err) => err);
 
     return res;
   } catch (error) {
-    return "Network request failed";
+    console.log(error);
   }
 };
 
@@ -81,11 +81,11 @@ const like = async (id, token) => {
   try {
     const res = await fetch(api + "/photos/like/" + id, config)
       .then((res) => res.json())
-      .catch((err) => "Network request failed");
+      .catch((err) => err);
 
     return res;
   } catch (error) {
-    return "Network request failed";
+    console.log(error);
   }
 };
 
@@ -96,11 +96,11 @@ const comment = async (data, id, token) => {
   try {
     const res = await fetch(api + "/photos/comment/" + id, config)
       .then((res) => res.json())
-      .catch((err) => "Network request failed");
+      .catch((err) => err);
 
     return res;
   } catch (error) {
-    return "Network request failed";
+    console.log(error);
   }
 };
 
@@ -111,11 +111,11 @@ const getPhotos = async () => {
   try {
     const res = await fetch(api + "/photos", config)
       .then((res) => res.json())
-      .catch((err) => v);
+      .catch((err) => err);
 
     return res;
   } catch (error) {
-    return "Network request failed";
+    console.log(error);
   }
 };
 
@@ -126,11 +126,11 @@ const searchPhotos = async (query, token) => {
   try {
     const res = await fetch(api + "/search?q" + query, config)
       .then((res) => res.json())
-      .catch((err) => "Network request failed");
+      .catch((err) => err);
 
     return res;
   } catch (error) {
-    return "Network request failed";
+    console.log(error);
   }
 };
 

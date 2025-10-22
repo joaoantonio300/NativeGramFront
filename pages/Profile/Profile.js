@@ -15,6 +15,8 @@ import { Feather, Ionicons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
 import { useRoute } from "@react-navigation/native";
 
+import Message from "../../components/Message";
+
 // Redux slices
 import { getUserDetails } from "../../slices/userSlice";
 import {
@@ -35,7 +37,7 @@ export default function Profile() {
 
   const { user, loading } = useSelector((state) => state.user);
   const { user: userAuth } = useSelector((state) => state.auth);
-  const userId = userAuth?._id;
+  const userId = userAuth?.user._id;
   const {
     photos,
     loading: loadingPhoto,
@@ -44,7 +46,7 @@ export default function Profile() {
   } = useSelector((state) => state.photo);
 
   const [title, setTitle] = useState("");
-  const [image, setImage] = useState(null);
+  const [imageAsset, setImageAsset] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [editTitle, setEditTitle] = useState("");
   const [editId, setEditId] = useState("");
@@ -73,27 +75,41 @@ export default function Profile() {
     });
 
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      // setImage(result.assets[0].uri);
+      setImageAsset(result.assets[0]);
     }
   };
 
   const handleSubmit = () => {
-    if (!title || !image) {
+    if (!title || !imageAsset) {
       alert("Preencha todos os campos!");
       return;
     }
 
     const formData = new FormData();
-    const fileName = `photo_${Date.now()}.png`;
+
+    const uri = imageAsset.uri;
+
+    const fileName = imageAsset.fileName || uri.split("/").pop();
+
+    let mimeType = imageAsset.mimeType;
+    if (!mimeType) {
+      const fileExtension = fileName.split(".").pop();
+      mimeType = `image/${fileExtension === "jpg" ? "jpeg" : fileExtension}`;
+    }
+
     formData.append("image", {
-      uri: image,
+      uri: uri,
       name: fileName,
-      type: "image/png",
+      type: mimeType,
     });
 
+    formData.append("title", title);
+
     dispatch(publishPhoto(formData));
+
     setTitle("");
-    setImage(null);
+    setImageAsset(null);
     resetComponentMessage();
   };
 
@@ -129,7 +145,7 @@ export default function Profile() {
       <View style={styles.profileHeader}>
         {user.profileImage && (
           <Image
-            source={{ uri: `${uploads}/users/${user.profileImage}`  }}
+            source={{ uri: `${uploads}/users/${user.profileImage}` }}
             style={styles.profileImage}
           />
         )}
@@ -156,7 +172,9 @@ export default function Profile() {
             <Text style={styles.pickButtonText}>Escolher imagem</Text>
           </TouchableOpacity>
 
-          {image && <Image source={{ uri: image }} style={styles.preview} />}
+          {imageAsset && (
+            <Image source={{ uri: imageAsset.uri }} style={styles.preview} />
+          )}
 
           <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
             <Text style={styles.submitText}>Postar</Text>
@@ -189,7 +207,7 @@ export default function Profile() {
       <View style={styles.photosContainer}>
         <Text style={styles.sectionTitle}>Fotos publicadas:</Text>
 
-        {(!Array.isArray(photos) || photos.length === 0) ? (
+        {!Array.isArray(photos) || photos.length === 0 ? (
           <Text style={styles.noPhotos}>Ainda não há fotos publicadas</Text>
         ) : (
           <FlatList
@@ -213,6 +231,10 @@ export default function Profile() {
                     onPress={() => handleDelete(item._id)}
                   />
                 </View>
+                {/* COLOQUE A MENSAGEM DE ERRO AQUI */}
+                {errorPhoto && <Message msg={errorPhoto} type="error" />}
+                {/* COLOQUE A MENSAGEM DE SUCESSO AQUI */}
+                {messagePhoto && <Message msg={messagePhoto} type="success" />}
               </View>
             )}
           />
