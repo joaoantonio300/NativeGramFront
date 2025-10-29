@@ -1,4 +1,3 @@
-import "./Search.css";
 
 // hooks
 import { useEffect } from "react";

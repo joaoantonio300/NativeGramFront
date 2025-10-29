@@ -17,7 +17,6 @@ import { useRoute } from "@react-navigation/native";
 
 import Message from "../../components/Message";
 
-// Redux slices
 import { getUserDetails } from "../../slices/userSlice";
 import {
   publishPhoto,
@@ -75,7 +74,6 @@ export default function Profile() {
     });
 
     if (!result.canceled) {
-      // setImage(result.assets[0].uri);
       setImageAsset(result.assets[0]);
     }
   };
@@ -141,7 +139,6 @@ export default function Profile() {
 
   return (
     <ScrollView style={styles.container}>
-      {/* HEADER */}
       <View style={styles.profileHeader}>
         {user.profileImage && (
           <Image
@@ -155,7 +152,6 @@ export default function Profile() {
         </View>
       </View>
 
-      {/* NOVA FOTO */}
       {!editMode ? (
         <View style={styles.newPhoto}>
           <Text style={styles.sectionTitle}>
@@ -181,7 +177,6 @@ export default function Profile() {
           </TouchableOpacity>
         </View>
       ) : (
-        // EDITAR FOTO
         <View style={styles.editPhoto}>
           <Text style={styles.sectionTitle}>Editando:</Text>
           <TextInput
@@ -203,7 +198,6 @@ export default function Profile() {
         </View>
       )}
 
-      {/* FOTOS PUBLICADAS */}
       <View style={styles.photosContainer}>
         <Text style={styles.sectionTitle}>Fotos publicadas:</Text>
 
@@ -231,9 +225,7 @@ export default function Profile() {
                     onPress={() => handleDelete(item._id)}
                   />
                 </View>
-                {/* COLOQUE A MENSAGEM DE ERRO AQUI */}
                 {errorPhoto && <Message msg={errorPhoto} type="error" />}
-                {/* COLOQUE A MENSAGEM DE SUCESSO AQUI */}
                 {messagePhoto && <Message msg={messagePhoto} type="success" />}
               </View>
             )}
