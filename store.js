@@ -6,9 +6,10 @@ import photoReducer from "./slices/photoSlice";
 
 export const store = configureStore({
   reducer: {
-    // Here i can add my reducers for use they
     auth: authReducer,
     user: userReducer,
     photo: photoReducer,
   },
 });
+
+// teste
