@@ -104,6 +104,10 @@ export default function Profile() {
 
     formData.append("title", title);
 
+    // for (let [key, value] of formData.entries()) {
+    //   console.log(key, value);
+    // }
+
     dispatch(publishPhoto(formData));
 
     setTitle("");
@@ -210,7 +214,10 @@ export default function Profile() {
             keyExtractor={(item) => item._id}
             renderItem={({ item }) => (
               <View style={styles.photo}>
-                <Image source={{ uri: item.image }} style={styles.photoImage} />
+                <Image
+                  source={{ uri: `${uploads}/photos/${item.image}` }}
+                  style={styles.photoImage}
+                />{" "}
                 <View style={styles.actions}>
                   <Feather
                     name="edit"

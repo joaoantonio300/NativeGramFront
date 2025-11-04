@@ -47,30 +47,43 @@ const EditProfile = () => {
 
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [1, 1],
       quality: 1,
     });
 
     if (!result.canceled) {
-      const uri = result.assets[0].uri;
+      const uri = result.assets[0];
       setPreviewImage(uri);
       setProfileImage(uri);
     }
   };
 
   const handleSubmit = async () => {
-    const userData = {};
-
-    if (name) userData.name = name;
-    if (bio) userData.bio = bio;
-    if (password) userData.password = password;
-    if (profileImage) userData.profileImage = profileImage;
-
     const formData = new FormData();
-    Object.keys(userData).forEach((key) => {
-      formData.append(key, userData[key]);
-    });
+
+    if (name) {
+      formData.append("name", name);
+    }
+    if (bio) {
+      formData.append("bio", bio);
+    }
+    if (password) {
+      formData.append("password", password);
+    }
+    if (profileImage) {
+      const uri = profileImage.uri;
+      const fileName = profileImage.fileName || uri.split("/").pop();
+
+      let mimeType = profileImage.mimeType;
+      if (!mimeType) {
+        const fileExtension = fileName.split(".").pop();
+        mimeType = `image/${fileExtension === "jpg" ? "jpeg" : fileExtension}`;
+      }
+      formData.append("profileImage", {
+        uri: uri,
+        name: fileName,
+        type: mimeType,
+      });
+    }
 
     await dispatch(updateProfile(formData));
     setTimeout(() => dispatch(resetMessage()), 2000);
@@ -88,8 +101,10 @@ const EditProfile = () => {
           style={styles.profileImage}
           source={{
             uri: previewImage
-              ? previewImage
-              : `${uploads}/users/${user.profileImage}`,
+              ? previewImage.uri
+              : user.profileImage
+              ? `${uploads}/users/${user.profileImage}`
+              : null,
           }}
         />
       )}
@@ -98,7 +113,7 @@ const EditProfile = () => {
         style={styles.input}
         placeholder="Nome"
         placeholderTextColor="#888"
-          value={name || ""}
+        value={name || ""}
         onChangeText={setName}
       />
 

@@ -76,7 +76,7 @@ const screenWidth = Dimensions.get("window").width;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     width: screenWidth * 0.9,
     alignSelf: "center",
     paddingTop: 24,
