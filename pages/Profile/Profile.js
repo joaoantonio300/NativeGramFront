@@ -143,6 +143,8 @@ export default function Profile() {
 
   return (
     <ScrollView style={styles.container}>
+      {errorPhoto && <Message msg={errorPhoto} type="error" />}
+      {messagePhoto && <Message msg={messagePhoto} type="success" />}
       <View style={styles.profileHeader}>
         {user.profileImage && (
           <Image
@@ -232,8 +234,6 @@ export default function Profile() {
                     onPress={() => handleDelete(item._id)}
                   />
                 </View>
-                {errorPhoto && <Message msg={errorPhoto} type="error" />}
-                {messagePhoto && <Message msg={messagePhoto} type="success" />}
               </View>
             )}
           />

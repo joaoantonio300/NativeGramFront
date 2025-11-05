@@ -11,12 +11,22 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
+import Message from "../../components/Message";
+
 import LikeContainer from "../../components/LikeContainer";
 import PhotoItem from "../../components/PhotoItem";
 import { useResetComponentMessage } from "../../hooks/useResetComponentMessage";
 import { getPhotos, like } from "../../slices/photoSlice";
 
+import {
+  resetMessage,
+} from "../../slices/photoSlice";
+
 export default function Home() {
+  const { message: messagePhoto, error: errorPhoto } = useSelector(
+    (state) => state.photo
+  );
+
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const resetMessage = useResetComponentMessage(dispatch);
@@ -44,6 +54,8 @@ export default function Home() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      {errorPhoto && <Message msg={errorPhoto} type="error" />}
+      {messagePhoto && <Message msg={messagePhoto} type="success" />}
       {Array.isArray(photos) && photos.length > 0 ? (
         photos.map((photo) => (
           <View key={photo._id} style={styles.photoBlock}>
@@ -62,7 +74,7 @@ export default function Home() {
           Ainda não há fotos publicadas,{" "}
           <Text
             style={styles.link}
-            onPress={() => navigation.navigate("Profile", { id: user._id })}
+            onPress={() => navigation.navigate("Profile", { id: user.user._id })}
           >
             Clique aqui
           </Text>

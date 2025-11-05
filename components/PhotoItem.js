@@ -1,10 +1,10 @@
-import React from 'react'
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
-import { uploads } from '../utils/config'
+import React from "react";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { uploads } from "../utils/config";
 
 export default function PhotoItem({ photo }) {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   return (
     <View style={styles.photoItem}>
@@ -18,15 +18,16 @@ export default function PhotoItem({ photo }) {
       <Text style={styles.title}>{photo.title}</Text>
 
       <Text style={styles.author}>
-        Publicada por:{' '}
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Profile', { id: photo.userId })}
+        Publicada por:{" "}
+        <Text
+          style={styles.authorName}
+          onPress={() => navigation.navigate("Profile", { id: photo.userId })}
         >
-          <Text style={styles.authorName}>{photo.userName}</Text>
-        </TouchableOpacity>
+          {photo.userName}
+        </Text>
       </Text>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -34,22 +35,23 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   photoImage: {
-    width: '100%',
+    width: "100%",
     height: 250,
     borderRadius: 8,
   },
   title: {
     fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 4, 
+    fontWeight: "bold",
+    marginBottom: 4,
   },
   author: {
-    textAlign: 'left',
+    textAlign: "left",
     fontSize: 14,
-    color: '#333',
+    color: "#333",
+    lineHeight: "center",
   },
   authorName: {
-    fontWeight: 'bold',
-    color: '#007bff',
+    fontWeight: "bold",
+    color: "#007bff",
   },
-})
+});

@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons'
 export default function LikeContainer({ photo, user, handleLike }) {
   if (!photo.likes || !user) return null
 
-  const isLiked = photo.likes.includes(user._id)
+  const isLiked = photo.likes.includes(user.user._id)
 
   return (
     <View style={styles.like}>
